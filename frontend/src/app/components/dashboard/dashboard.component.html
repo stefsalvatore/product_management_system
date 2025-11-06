@@ -1,0 +1,33 @@
+<div class="dashboard">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <h2>Product Management System</h2>
+    </div>
+    <div class="navbar-user">
+      <span>{{ user?.email }}</span>
+      <button class="btn btn-secondary" (click)="logout()">Logout</button>
+    </div>
+  </nav>
+
+  <div class="dashboard-content">
+    <aside class="sidebar">
+      <ul>
+        <li [class.active]="activeTab === 'products'" (click)="setActiveTab('products')">
+          Products
+        </li>
+        <li [class.active]="activeTab === 'categories'" (click)="setActiveTab('categories')">
+          Categories
+        </li>
+        <li [class.active]="activeTab === 'users'" (click)="setActiveTab('users')">
+          Users
+        </li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <app-products *ngIf="activeTab === 'products'"></app-products>
+      <app-categories *ngIf="activeTab === 'categories'"></app-categories>
+      <app-users *ngIf="activeTab === 'users'"></app-users>
+    </main>
+  </div>
+</div>

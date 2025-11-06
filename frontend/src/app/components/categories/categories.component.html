@@ -1,0 +1,76 @@
+<div class="categories-container">
+  <h1>Categories Management</h1>
+
+  <div *ngIf="error" class="alert alert-error">{{ error }}</div>
+  <div *ngIf="success" class="alert alert-success">{{ success }}</div>
+
+  <div class="toolbar mb-20">
+    <button class="btn btn-primary" (click)="openAddModal()">Add Category</button>
+  </div>
+
+  <div class="card">
+    <div *ngIf="loading" class="loading">Loading categories...</div>
+
+    <table class="table" *ngIf="!loading && categories.length > 0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Unique ID</th>
+          <th>Name</th>
+          <th>Product Count</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let category of categories">
+          <td>{{ category.id }}</td>
+          <td>{{ category.unique_id }}</td>
+          <td>{{ category.name }}</td>
+          <td>{{ category.product_count || 0 }}</td>
+          <td>
+            <button class="btn btn-primary" style="margin-right: 5px;" (click)="openEditModal(category)">Edit</button>
+            <button class="btn btn-danger" (click)="onDeleteCategory(category.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="!loading && categories.length === 0" class="text-center" style="padding: 40px;">
+      <p>No categories found.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Add Modal -->
+<div class="modal" *ngIf="showAddModal">
+  <div class="modal-content">
+    <h2>Add Category</h2>
+    <form (ngSubmit)="onAddCategory()">
+      <div class="form-group">
+        <label>Category Name</label>
+        <input type="text" class="form-control" [(ngModel)]="categoryForm.name" name="name" required>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-secondary" (click)="closeAddModal()">Cancel</button>
+        <button type="submit" class="btn btn-primary">Add Category</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal" *ngIf="showEditModal">
+  <div class="modal-content">
+    <h2>Edit Category</h2>
+    <form (ngSubmit)="onUpdateCategory()">
+      <div class="form-group">
+        <label>Category Name</label>
+        <input type="text" class="form-control" [(ngModel)]="categoryForm.name" name="name" required>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-secondary" (click)="closeEditModal()">Cancel</button>
+        <button type="submit" class="btn btn-primary">Update Category</button>
+      </div>
+    </form>
+  </div>
+</div>
